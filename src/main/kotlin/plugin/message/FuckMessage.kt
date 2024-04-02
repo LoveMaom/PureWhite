@@ -21,13 +21,21 @@ object FuckMessage {
             event.group.sendMessage(MessageConfig.fuck.random())
             return
         }
+        if (file.name.contains(".gif")) {
+            // 发出图片
+            event.group.sendMessage(buildMessageChain {
+                +PlainText(MessageConfig.fuck.random())
+                +file.uploadAsImage(event.group)
+            })
+            return
+        }
         // 上传图片
         val image = withContext(Dispatchers.IO) {
             ImageIO.read(file)
         }
+        val height = edit(image.height)
         // 设置大小
-        val height = image.height / 8
-        val width = image.width / 8
+        val width = edit(image.width)
         // 创建画板
         val getImage = BufferedImage(width,height, BufferedImage.TYPE_INT_RGB)
         val graphics = getImage.createGraphics()
@@ -53,5 +61,14 @@ object FuckMessage {
         withContext(Dispatchers.IO) {
             end.close()
         }
+    }
+    private fun edit(num: Int): Int {
+        return when(num){
+            in 2000..3999 -> num / 16
+            in 1000..1999 -> num / 8
+            in 500..999 -> num / 4
+            else -> num
+        }
+
     }
 }
