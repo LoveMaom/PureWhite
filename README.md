@@ -16,4 +16,4 @@
 插件启动后该文件夹会创建 直接塞入图片即可无需重启
 
 ### 下载
-[mirai 地址]([https://github.com/LoveMaom/PureWhite](https://mirai.mamoe.net/topic/2643/purewhite))
+[mirai 地址](https://mirai.mamoe.net/topic/2643/purewhite)
