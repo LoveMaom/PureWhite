@@ -5,6 +5,7 @@ import com.purewhite.plugin.common.GroupGet.checkGroup
 import com.purewhite.plugin.common.GroupGet.download
 import com.purewhite.plugin.common.GroupGet.groupList
 import com.purewhite.plugin.common.GroupGet.imageGroupFriend
+import com.purewhite.plugin.common.SetTime
 import com.purewhite.plugin.common.TheTime
 import com.purewhite.plugin.config.FuckMemberConfig.fuck
 import com.purewhite.plugin.message.FuckMessage
@@ -71,6 +72,7 @@ object FuckMember {
                         "你在对${name}(${memberNumber})超的太疯狂，最终精疲力尽跌倒而亡",
                         "你在独自探索${name}(${memberNumber})的黑洞时消失在其中，导致精尽人亡"
                     )
+                    SetTime.time(event,"草群友")
                     message.add(At(event.sender.id) + messageList.random())
                     event.group.sendMessage(message.build())
                     return
