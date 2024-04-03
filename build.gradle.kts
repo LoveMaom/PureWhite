@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.purewhite"
-version = "0.0.2"
+version = "0.0.3"
 
 repositories {
     maven("https://maven.aliyun.com/repository/public")
