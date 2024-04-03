@@ -8,5 +8,5 @@ object FuckAdminConfig : AutoSavePluginConfig("FuckAdminConfig") {
     @ValueDescription("草群主冷却时间 单位分钟")
     var adminCD by value<Int>(10)
     @ValueDescription("草群主状态")
-    var fuckAdmin: MutableMap<Long, MutableMap<Long, Long>> by value(mutableMapOf())
+    var fuckAdmin: MutableMap<Long, Long> by value(mutableMapOf())
 }

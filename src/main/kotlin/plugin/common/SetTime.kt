@@ -28,17 +28,17 @@ object SetTime {
         if (type == "草群友") {
             minute += FuckMemberConfig.memberCD
             endTimeVs = minute(minute)
-            fuck[event.group.id]!![event.sender.id] = endTimeVs
+            fuck[event.sender.id] = endTimeVs
         }
         if (type == "草群主") {
             minute += FuckAdminConfig.adminCD
             endTimeVs = minute(minute)
-            fuckAdmin[event.group.id]!![event.sender.id] = endTimeVs
+            fuckAdmin[event.sender.id] = endTimeVs
         }
         if (type == "草管理") {
             minute += FuckManagementConfig.managementCD
             endTimeVs = minute(minute)
-            fuckManagement[event.group.id]!![event.sender.id] = endTimeVs
+            fuckManagement[event.sender.id] = endTimeVs
         }
     }
     private fun minute(num: Int): Long {

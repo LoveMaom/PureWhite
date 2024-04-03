@@ -26,8 +26,7 @@ object FuckAdmin {
                 event.group.sendMessage("群主发癫想草自己是不可能的哦！")
                 return
             }
-            if (fuckAdmin[event.group.id] == null) fuckAdmin[event.group.id] = mutableMapOf()
-            if (fuckAdmin[event.group.id]!![event.sender.id] != null && TheTime.main() < fuckAdmin[event.group.id]!![event.sender.id]!!) {
+            if (fuckAdmin[event.sender.id] != null && TheTime.main() < fuckAdmin[event.sender.id]!!) {
                 FuckMessage.no(event)
                 return
             }

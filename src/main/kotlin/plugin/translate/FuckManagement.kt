@@ -16,8 +16,7 @@ object FuckManagement {
         if (event.message.content != "草管理") {
             return
         }
-        if (fuckManagement[event.group.id] == null) fuckManagement[event.group.id] = mutableMapOf()
-        if (fuckManagement[event.group.id]!![event.sender.id] != null && TheTime.main() < fuckManagement[event.group.id]!![event.sender.id]!!) {
+        if (fuckManagement[event.sender.id] != null && TheTime.main() < fuckManagement[event.sender.id]!!) {
             FuckMessage.no(event)
             return
         }
@@ -40,12 +39,13 @@ object FuckManagement {
         // 下载倒霉蛋的头像
         val image = GroupGet.imageGroupFriend(url)
         val message = MessageChainBuilder()
-        val name = user.nameCardOrNick
+        val name = GroupGet.filter(user.nameCardOrNick)
 
         if ((0..100).random() > 50) {
 
             if (user.id == event.sender.id) {
                 event.group.sendMessage(At(event.sender.id) + "你成功超到了平行世界的自己，真是自己都不放过呢")
+                SetTime.time(event,"草管理")
                 return
             }
 

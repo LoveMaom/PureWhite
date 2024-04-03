@@ -54,9 +54,8 @@ object GroupGet {
     // 发出图片
     suspend fun download(event: GroupMessageEvent, url: String, group: Contact, message: MessageChainBuilder, image: File, type: String) {
 
-        image.let { it2 -> message.add(it2.uploadAsImage(group)) }
-
         SetTime.time(event,type)
+        image.let { it2 -> message.add(it2.uploadAsImage(group)) }
         group.sendMessage(message.build())
 
         withContext(Dispatchers.IO) {

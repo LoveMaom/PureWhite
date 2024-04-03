@@ -18,7 +18,7 @@ object PureWhite : KotlinPlugin(
     JvmPluginDescription(
         id = "com.purewhite.entertainment",
         name = "Pure White",
-        version = "0.0.1",
+        version = "0.0.3",
     ) {
 
         author("Love_Maom")

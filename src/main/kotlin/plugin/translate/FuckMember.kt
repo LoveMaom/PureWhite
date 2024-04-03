@@ -20,8 +20,7 @@ import net.mamoe.mirai.message.data.content
 object FuckMember {
     suspend fun main(event: GroupMessageEvent){
         if (event.message.content == "草群友") {
-            if (fuck[event.group.id] == null) fuck[event.group.id] = mutableMapOf()
-            if (fuck[event.group.id]!![event.sender.id] != null && TheTime.main() < fuck[event.group.id]!![event.sender.id]!!) {
+            if (fuck[event.sender.id] != null && TheTime.main() < fuck[event.sender.id]!!) {
                 FuckMessage.no(event)
                 return
             }
