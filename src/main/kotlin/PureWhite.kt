@@ -1,10 +1,9 @@
 package com.purewhite
 
 import com.purewhite.plugin.common.Create
-import com.purewhite.plugin.config.FuckAdminConfig
-import com.purewhite.plugin.config.FuckManagementConfig
-import com.purewhite.plugin.config.FuckMemberConfig
-import com.purewhite.plugin.config.MessageConfig
+import com.purewhite.plugin.config.*
+import com.purewhite.plugin.message.HelpMessage
+import com.purewhite.plugin.translate.EverydayWife
 import com.purewhite.plugin.translate.FuckAdmin
 import com.purewhite.plugin.translate.FuckManagement
 import com.purewhite.plugin.translate.FuckMember
@@ -32,10 +31,13 @@ object PureWhite : KotlinPlugin(
         FuckAdminConfig.reload()
         FuckManagementConfig.reload()
         MessageConfig.reload()
+        EverydayWifeConfig.reload()
         GlobalEventChannel.subscribeAlways<GroupMessageEvent> {
             FuckMember.main(this)
             FuckAdmin.main(this)
             FuckManagement.main(this)
+            EverydayWife.main(this)
+            HelpMessage.main(this)
         }
     }
 }

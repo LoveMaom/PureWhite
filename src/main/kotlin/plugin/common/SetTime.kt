@@ -1,5 +1,6 @@
 package com.purewhite.plugin.common
 
+import com.purewhite.plugin.config.EverydayWifeConfig.everydayWife
 import com.purewhite.plugin.config.FuckAdminConfig
 import com.purewhite.plugin.config.FuckAdminConfig.fuckAdmin
 import com.purewhite.plugin.config.FuckManagementConfig
@@ -16,10 +17,10 @@ object SetTime {
     private val calendar = Calendar.getInstance()
     private val year = calendar[Calendar.YEAR]
     private val month = calendar[Calendar.MONTH] + 1
-    private val day = calendar[Calendar.DAY_OF_MONTH]
-    private val hour = calendar[Calendar.HOUR_OF_DAY]
+    private var day = calendar[Calendar.DAY_OF_MONTH]
+    private var hour = calendar[Calendar.HOUR_OF_DAY]
     private var minute = calendar[Calendar.MINUTE]
-    private val second = calendar[Calendar.SECOND]
+    private var second = calendar[Calendar.SECOND]
 
     fun time (event: GroupMessageEvent, type: String) {
 
@@ -40,9 +41,22 @@ object SetTime {
             endTimeVs = minute(minute)
             fuckManagement[event.sender.id] = endTimeVs
         }
+        if (type == "每日老婆") {
+            day += 1
+            minute = 0
+            second = 0
+            hour = 0
+            endTimeVs = day(day)
+            everydayWife[event.sender.id] = endTimeVs
+        }
     }
     private fun minute(num: Int): Long {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd-HH:mm:ss")
         return dateFormat.parse("$year-$month-$day-$hour:$num:$second", ParsePosition(0)).time / 1000
     }
+    private fun day(num: Int): Long {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd-HH:mm:ss")
+        return dateFormat.parse("$year-$month-$num-$hour:$minute:$second", ParsePosition(0)).time / 1000
+    }
+
 }
