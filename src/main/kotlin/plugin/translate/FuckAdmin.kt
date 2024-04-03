@@ -26,7 +26,7 @@ object FuckAdmin {
                 event.group.sendMessage("群主发癫想草自己是不可能的哦！")
                 return
             }
-            if (fuckAdmin[event.sender.id] == null || TheTime.main() >= fuckAdmin[event.sender.id]!!) {
+            if (fuckAdmin[event.sender.id.toString()] == null || TheTime.main() >= fuckAdmin[event.sender.id.toString()]!!.toLong()) {
                 // 创建用来表达倒霉蛋的语句
                 val message = MessageChainBuilder()
                 // 获取倒霉蛋

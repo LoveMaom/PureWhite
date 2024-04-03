@@ -29,17 +29,17 @@ object SetTime {
         if (type == "草群友") {
             minute += FuckMemberConfig.memberCD
             endTimeVs = minute(minute)
-            fuck[event.sender.id] = endTimeVs
+            fuck[event.sender.id.toString()] = endTimeVs.toString()
         }
         if (type == "草群主") {
             minute += FuckAdminConfig.adminCD
             endTimeVs = minute(minute)
-            fuckAdmin[event.sender.id] = endTimeVs
+            fuckAdmin[event.sender.id.toString()] = endTimeVs.toString()
         }
         if (type == "草管理") {
             minute += FuckManagementConfig.managementCD
             endTimeVs = minute(minute)
-            fuckManagement[event.sender.id] = endTimeVs
+            fuckManagement[event.sender.id.toString()] = endTimeVs.toString()
         }
         if (type == "每日老婆") {
             day += 1
@@ -47,7 +47,7 @@ object SetTime {
             second = 0
             hour = 0
             endTimeVs = day(day)
-            everydayWife[event.sender.id] = endTimeVs
+            everydayWife[event.sender.id.toString()] = endTimeVs.toString()
         }
     }
     private fun minute(num: Int): Long {

@@ -10,6 +10,11 @@ import java.io.File
 import java.net.URL
 
 object GroupGet {
+    fun atNum(text: String): Long {
+        val regex = Regex("\\[mirai:at:(\\d+)]")
+        val matchResult = regex.find(text)
+        return matchResult?.groups?.get(1)?.value!!.toLong()
+    }
     // 获取所有群聊的成员
     fun groupList(event: GroupMessageEvent): List<Long> {
         val list : MutableList<Long> = mutableListOf()

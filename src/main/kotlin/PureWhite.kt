@@ -3,10 +3,7 @@ package com.purewhite
 import com.purewhite.plugin.common.Create
 import com.purewhite.plugin.config.*
 import com.purewhite.plugin.message.HelpMessage
-import com.purewhite.plugin.translate.EverydayWife
-import com.purewhite.plugin.translate.FuckAdmin
-import com.purewhite.plugin.translate.FuckManagement
-import com.purewhite.plugin.translate.FuckMember
+import com.purewhite.plugin.translate.*
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
 import net.mamoe.mirai.event.GlobalEventChannel
@@ -32,12 +29,14 @@ object PureWhite : KotlinPlugin(
         FuckManagementConfig.reload()
         MessageConfig.reload()
         EverydayWifeConfig.reload()
+        CompelConfig.reload()
         GlobalEventChannel.subscribeAlways<GroupMessageEvent> {
             FuckMember.main(this)
             FuckAdmin.main(this)
             FuckManagement.main(this)
             EverydayWife.main(this)
             HelpMessage.main(this)
+            Compel.main(this)
         }
     }
 }

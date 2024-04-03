@@ -16,8 +16,8 @@ object FuckManagement {
         if (event.message.content != "草管理") {
             return
         }
-        if (fuckManagement[event.sender.id] == null ||
-            TheTime.main() >= fuckManagement[event.sender.id]!!)
+        if (fuckManagement[event.sender.id.toString()] == null ||
+            TheTime.main() >= fuckManagement[event.sender.id.toString()]!!.toLong())
         {
             // 管理列表
             val management = mutableListOf<NormalMember>()
