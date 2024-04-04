@@ -12,6 +12,8 @@
 - - 可单独调整冷却时间0-59分钟<br>
 - 每日老婆
 - - 所有群统一老婆
+- 强上
+- - 指定超人
 
 可调整超人时间未到语句上传的图片<br>
 需要在data/com.purewhite.entertainment/FuckNo下塞入图片<br>
