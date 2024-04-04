@@ -8,5 +8,5 @@ object FuckMemberConfig : AutoSavePluginConfig("FuckMemberConfig") {
     @ValueDescription("草群友冷却时间 单位分钟")
     var memberCD by value<Int>(10)
     @ValueDescription("草群友状态")
-    var fuck: MutableMap<String, String> by value(mutableMapOf())
+    var fuck: MutableMap<Long, Long> by value(mutableMapOf())
 }

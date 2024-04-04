@@ -20,7 +20,7 @@ import net.mamoe.mirai.message.data.content
 object FuckMember {
     suspend fun main(event: GroupMessageEvent) {
         if (event.message.content == "草群友") {
-            if (fuck[event.sender.id.toString()] == null || TheTime.main() >= fuck[event.sender.id.toString()]!!.toLong()) {
+            if (fuck[event.sender.id] == null || TheTime.main() >= fuck[event.sender.id]!!) {
                 // 获取倒霉蛋的qq号
                 var memberNumber = groupList(event).random()
                 // 倒霉蛋的user
@@ -117,7 +117,7 @@ object FuckMember {
 
                     download(event, url, event.group, message, image, "草群友")
                 }
-            } else FuckMessage.no(event)
+            } else FuckMessage.no(event,"草群友")
         }
 
     }

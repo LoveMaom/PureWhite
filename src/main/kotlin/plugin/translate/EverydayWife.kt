@@ -12,7 +12,7 @@ object EverydayWife {
     suspend fun main(event: GroupMessageEvent) {
         if (event.message.content == "每日老婆") {
             val message = MessageChainBuilder()
-            if (everydayWife[event.sender.id.toString()] == null || TheTime.main() >= everydayWife[event.sender.id.toString()]!!.toLong()) {
+            if (everydayWife[event.sender.id] == null || TheTime.main() >= everydayWife[event.sender.id]!!) {
                 val rank = mutableListOf<NormalMember>()
                 val members = event.group.members
                 for (i in members.indices) {
@@ -42,15 +42,15 @@ object EverydayWife {
                             +"\n————————"
                 )
                 val image = GroupGet.imageGroupFriend(wife.avatarUrl(AvatarSpec.LARGE))
-                everydayWifeMember[event.sender.id.toString()] = wife.id.toString()
+                everydayWifeMember[event.sender.id] = wife.id
                 GroupGet.download(event,wife.avatarUrl,event.group,message,image,"每日老婆")
             } else {
-                val groupNum = GroupGet.checkGroup(event, everydayWifeMember[event.sender.id.toString()]!!.toLong())
+                val groupNum = GroupGet.checkGroup(event, everydayWifeMember[event.sender.id]!!)
                 if (groupNum == 0L) {
                     event.group.sendMessage("无法获取你今天的老婆，原因：你的老婆已经退出你老婆原本所在的群聊")
                     return
                 }
-                val member = event.bot.getGroupOrFail(groupNum).getMemberOrFail(everydayWifeMember[event.sender.id.toString()]!!.toLong())
+                val member = event.bot.getGroupOrFail(groupNum).getMemberOrFail(everydayWifeMember[event.sender.id]!!)
                 message.add(
                     At(event.sender) +
                             "\n你已经有老婆了" +

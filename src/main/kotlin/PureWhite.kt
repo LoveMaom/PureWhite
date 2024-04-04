@@ -1,6 +1,7 @@
 package com.purewhite
 
 import com.purewhite.plugin.common.Create
+import com.purewhite.plugin.common.GroupGet
 import com.purewhite.plugin.config.*
 import com.purewhite.plugin.message.HelpMessage
 import com.purewhite.plugin.translate.*
@@ -30,6 +31,7 @@ object PureWhite : KotlinPlugin(
         MessageConfig.reload()
         EverydayWifeConfig.reload()
         CompelConfig.reload()
+        RecordConfig.reload()
         GlobalEventChannel.subscribeAlways<GroupMessageEvent> {
             FuckMember.main(this)
             FuckAdmin.main(this)
@@ -37,6 +39,7 @@ object PureWhite : KotlinPlugin(
             EverydayWife.main(this)
             HelpMessage.main(this)
             Compel.main(this)
+            GroupGet.record(this)
         }
     }
 }

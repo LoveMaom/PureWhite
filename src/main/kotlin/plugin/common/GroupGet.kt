@@ -1,5 +1,6 @@
 package com.purewhite.plugin.common
 
+import com.purewhite.plugin.config.RecordConfig.recordSet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.mamoe.mirai.contact.Contact
@@ -10,10 +11,22 @@ import java.io.File
 import java.net.URL
 
 object GroupGet {
+    // 获取近期聊天的人
+    fun record(event: GroupMessageEvent) {
+        if (recordSet[event.group.id] == null) {
+            recordSet[event.group.id] = mutableListOf()
+        }
+        if (!recordSet[event.group.id]!!.contains(event.sender.id)) {
+            recordSet[event.group.id]!!.add(event.sender.id)
+        }
+        if (recordSet[event.group.id]!!.size > 10) {
+            recordSet[event.group.id]!!.removeAt(10)
+        }
+    }
     fun atNum(text: String): Long {
-        val regex = Regex("\\[mirai:at:(\\d+)]")
-        val matchResult = regex.find(text)
-        return matchResult?.groups?.get(1)?.value!!.toLong()
+        val regex = Regex("\\d+")
+        val result = regex.find(text)?.value
+        return result!!.toLong()
     }
     // 获取所有群聊的成员
     fun groupList(event: GroupMessageEvent): List<Long> {

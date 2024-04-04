@@ -3,6 +3,7 @@ package com.purewhite.plugin.translate
 import com.purewhite.plugin.common.GroupGet
 import com.purewhite.plugin.common.SetTime
 import com.purewhite.plugin.common.TheTime
+import com.purewhite.plugin.config.FuckAdminConfig.adminReply
 import com.purewhite.plugin.config.FuckAdminConfig.fuckAdmin
 import com.purewhite.plugin.message.FuckMessage
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -26,7 +27,7 @@ object FuckAdmin {
                 event.group.sendMessage("群主发癫想草自己是不可能的哦！")
                 return
             }
-            if (fuckAdmin[event.sender.id.toString()] == null || TheTime.main() >= fuckAdmin[event.sender.id.toString()]!!.toLong()) {
+            if (fuckAdmin[event.sender.id] == null || TheTime.main() >= fuckAdmin[event.sender.id]!!) {
                 // 创建用来表达倒霉蛋的语句
                 val message = MessageChainBuilder()
                 // 获取倒霉蛋
@@ -205,13 +206,13 @@ object FuckAdmin {
                     if (end) ListeningStatus.STOPPED else ListeningStatus.LISTENING
                 }
                 GlobalScope.launch {
-                    delay(12000)
+                    delay(adminReply)
                     if (listener.isActive) {
                         event.group.sendMessage("时间到咯")
                         listener.complete()
                     }
                 }
-            } else FuckMessage.no(event)
+            } else FuckMessage.no(event,"草群主")
         }
     }
     private suspend fun messageEnd(sender: Member, event: GroupMessageEvent) {

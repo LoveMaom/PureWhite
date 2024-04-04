@@ -1,5 +1,10 @@
 package com.purewhite.plugin.message
 
+import com.purewhite.plugin.common.TheTime
+import com.purewhite.plugin.config.CompelConfig.compel
+import com.purewhite.plugin.config.FuckAdminConfig.fuckAdmin
+import com.purewhite.plugin.config.FuckManagementConfig.fuckManagement
+import com.purewhite.plugin.config.FuckMemberConfig.fuck
 import com.purewhite.plugin.config.MessageConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -14,17 +19,24 @@ import java.io.File
 import javax.imageio.ImageIO
 
 object FuckMessage {
-    suspend fun no(event: GroupMessageEvent) {
+    suspend fun no(event: GroupMessageEvent,type: String) {
         // 获取操人时间未到图片
         val file = File("data/com.purewhite.entertainment/FuckNo").listFiles()!!.random()
         if (!file.isFile) {
             event.group.sendMessage(MessageConfig.fuck.random())
             return
         }
+        var time = 0L
+        when (type){
+            "强上" -> time = compel[event.sender.id]!! - TheTime.main()
+            "草群友" -> time = fuck[event.sender.id]!! - TheTime.main()
+            "草管理" -> time = fuckManagement[event.sender.id]!! - TheTime.main()
+            "草群主" -> time = fuckAdmin[event.sender.id]!! - TheTime.main()
+        }
         if (file.name.contains(".gif")) {
             // 发出图片
             event.group.sendMessage(buildMessageChain {
-                +PlainText(MessageConfig.fuck.random())
+                +PlainText(MessageConfig.fuck.random().replace("%time",(time / 60).toString()))
                 +file.uploadAsImage(event.group)
             })
             return
@@ -54,7 +66,7 @@ object FuckMessage {
         val end = tempFile.toExternalResource()
         // 发出图片
         event.group.sendMessage(buildMessageChain {
-            +PlainText(MessageConfig.fuck.random())
+            +PlainText(MessageConfig.fuck.random().replace("%time",(time / 60).toString()))
             +end.use { it.uploadAsImage(event.group) }
         })
         // 释放资源
