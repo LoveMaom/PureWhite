@@ -23,6 +23,7 @@ object GroupGet {
             recordSet[event.group.id]!!.removeAt(10)
         }
     }
+    // 获取艾特的人中的数字
     fun atNum(text: String): Long {
         val regex = Regex("\\d+")
         val result = regex.find(text)?.value

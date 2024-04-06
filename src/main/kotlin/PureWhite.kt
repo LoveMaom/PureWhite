@@ -15,7 +15,7 @@ object PureWhite : KotlinPlugin(
     JvmPluginDescription(
         id = "com.purewhite.entertainment",
         name = "Pure White",
-        version = "0.0.3",
+        version = "0.0.4",
     ) {
 
         author("Love_Maom")
@@ -33,13 +33,15 @@ object PureWhite : KotlinPlugin(
         CompelConfig.reload()
         RecordConfig.reload()
         GlobalEventChannel.subscribeAlways<GroupMessageEvent> {
-            FuckMember.main(this)
-            FuckAdmin.main(this)
-            FuckManagement.main(this)
-            EverydayWife.main(this)
-            HelpMessage.main(this)
-            Compel.main(this)
-            GroupGet.record(this)
+            if (group.botMuteRemaining < 1) {
+                FuckMember.main(this)
+                FuckAdmin.main(this)
+                FuckManagement.main(this)
+                EverydayWife.main(this)
+                HelpMessage.main(this)
+                Compel.main(this)
+                GroupGet.record(this)
+            }
         }
     }
 }

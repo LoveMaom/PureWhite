@@ -86,7 +86,7 @@ object FuckAdmin {
                         "\n5.饶他一次")
 
                 // 创建监听
-                val listener = GlobalEventChannel.subscribe<GroupMessageEvent> {
+                val adminListener = GlobalEventChannel.subscribe<GroupMessageEvent> {
                     // 最终判断开关监听
                     var end = false
                     // 判断是否是群友本人回复
@@ -207,9 +207,9 @@ object FuckAdmin {
                 }
                 GlobalScope.launch {
                     delay(adminReply)
-                    if (listener.isActive) {
+                    if (adminListener.isActive) {
                         event.group.sendMessage("时间到咯")
-                        listener.complete()
+                        adminListener.complete()
                     }
                 }
             } else FuckMessage.no(event,"草群主")

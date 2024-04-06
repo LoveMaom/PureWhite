@@ -31,7 +31,7 @@ object Compel {
                 val member = event.group.getMemberOrFail(GroupGet.atNum(event.message.content))
                 val oneSender = event.sender
                 val name = GroupGet.filter(member.nameCardOrNick)
-                if ((0..100).random() > 30) {
+                if ((0..100).random() > 20) {
                     event.group.sendMessage(
                         At(event.sender) +
                                 "\n你尾随成功" +
@@ -49,28 +49,23 @@ object Compel {
                             val image = GroupGet.imageGroupFriend(url)
                             when (it.message.content) {
                                 "1" -> {
-                                    when ((0..100).random()) {
-                                        in 50..100 -> {
-                                            val messageList = mutableListOf(
-                                                "你冲上去，撕光${name}(${member.id})的衣服，在路人震惊的目光中暴超了Ta，你直接欢呼:老子终于超市你这个小烧货了",
-                                                "你扒开衣服，从${name}(${member.id})的背后冲了过去，撕开丝袜对着门路就怼了进去，直接强行活塞运动，在${name}(${member.id})痛苦嚎叫中结束了你的活塞运动",
-                                                "你扑向${name}${member.id}在警察赶到前，能做的全部做了个遍，大呼：这波不亏"
-                                            )
-                                            message.add(messageList.random())
-                                            event.group.sendMessage(At(sender) + messageList.random())
-                                            GroupGet.download(event, url, event.group, message, image, "强上")
-                                        }
-
-                                        else -> {
-                                            val messageList = mutableListOf(
-                                                "你冲上去，结果被${name}(${member.id})一巴掌打晕，把你抱起进入小巷中一顿乱超",
-                                                "${name}(${member.id})反手将你抱起，在你震惊的注视下，Ta的牛牛直接捅破了你的衣物，直冲云霄，你只觉得一阵舒爽，然后倒地不起",
-                                                "${name}${member.id}一JIO把你的牛牛踹断了"
-                                            )
-                                            message.add(messageList.random())
-                                            event.group.sendMessage(At(sender) + messageList.random())
-                                            GroupGet.download(event, url, event.group, message, image, "强上")
-                                        }
+                                    val randomNumber = (0..100).random()
+                                    if (randomNumber > 30) {
+                                        val messageList = mutableListOf(
+                                            "你冲上去，撕光${name}(${member.id})的衣服，在路人震惊的目光中暴超了Ta，你直接欢呼:老子终于超市你这个小烧货了",
+                                            "你扒开衣服，从${name}(${member.id})的背后冲了过去，撕开丝袜对着门路就怼了进去，直接强行活塞运动，在${name}(${member.id})痛苦嚎叫中结束了你的活塞运动",
+                                            "你扑向${name}${member.id}在警察赶到前，能做的全部做了个遍，大呼：这波不亏"
+                                        )
+                                        message.add(messageList.random())
+                                        GroupGet.download(event, url, event.group, message, image, "强上")
+                                    } else {
+                                        val messageList = mutableListOf(
+                                            "你冲上去，结果被${name}(${member.id})一巴掌打晕，把你抱起进入小巷中一顿乱超",
+                                            "${name}(${member.id})反手将你抱起，在你震惊的注视下，Ta的牛牛直接捅破了你的衣物，直冲云霄，你只觉得一阵舒爽，然后倒地不起",
+                                            "${name}${member.id}一JIO把你的牛牛踹断了"
+                                        )
+                                        message.add(At(sender) + messageList.random())
+                                        GroupGet.download(event, url, event.group, message, image, "强上")
                                     }
                                     boolean = true
                                 }
@@ -91,15 +86,15 @@ object Compel {
                                             members.add(event.group.getMemberOrFail(recordSet[event.group.id]!![i]))
                                         }
                                     }
-                                    if (random > 80) {
-                                        group.sendMessage("你在想着超路人时被${members[0].nameCardOrNick}(${members[0].id})、${members[1].nameCardOrNick}(${members[1].id})和${members[2].nameCardOrNick}(${members[2].id})超了")
-                                    }
-                                    if (random > 50) message.add(At(sender) + "${members[0].nameCardOrNick}(${members[0].id})、${members[1].nameCardOrNick}(${members[1].id})和${members[2].nameCardOrNick}(${members[2].id})正在路上走着撞见你正在超${member.nameCardOrNick}(${member.id})，结果被你一起超了")
+                                    if (random > 80) group.sendMessage(At(sender) + "你在想着超路人时被${members[0].nameCardOrNick}(${members[0].id})、${members[1].nameCardOrNick}(${members[1].id})和${members[2].nameCardOrNick}(${members[2].id})超了")
+                                    else if (random > 50) message.add(At(sender) + "${members[0].nameCardOrNick}(${members[0].id})、${members[1].nameCardOrNick}(${members[1].id})和${members[2].nameCardOrNick}(${members[2].id})正在路上走着撞见你正在超${member.nameCardOrNick}(${member.id})，结果被你一起超了")
                                     else if (random > 10) message.add(At(sender) + "${members[0].nameCardOrNick}(${members[0].id})、${members[1].nameCardOrNick}(${members[1].id})、${members[2].nameCardOrNick}(${members[2].id})和${members[3].nameCardOrNick}(${members[3].id})正在路上走着撞见你正在超${member.nameCardOrNick}(${member.id})，结果被你一起超了")
                                     else message.add(At(sender) + "${members[0].nameCardOrNick}(${members[0].id})、${members[1].nameCardOrNick}(${members[1].id})、${members[2].nameCardOrNick}(${members[2].id})、${members[3].nameCardOrNick}(${members[3].id})和${members[4].nameCardOrNick}(${members[4].id})正在路上走着撞见你正在超${member.nameCardOrNick}(${member.id})，结果被你一起超了")
 
                                     boolean = true
-                                    GroupGet.download(event, url, event.group, message, image, "强上")
+                                    if (random <= 80) {
+                                        GroupGet.download(event, url, event.group, message, image, "强上")
+                                    }
                                 }
 
                                 "3" -> {
@@ -121,6 +116,7 @@ object Compel {
                                     )
                                     SetTime.time(event,"强上")
                                     event.group.sendMessage(At(sender) + messageList.random())
+                                    boolean = true
                                 }
                             }
                         }
