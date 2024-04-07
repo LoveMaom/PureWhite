@@ -2,6 +2,7 @@ package com.purewhite.plugin.translate
 
 import com.purewhite.plugin.common.GroupGet
 import com.purewhite.plugin.common.TheTime
+import com.purewhite.plugin.config.EverydayWifeConfig.everydayCommand
 import com.purewhite.plugin.config.EverydayWifeConfig.everydayWife
 import com.purewhite.plugin.config.EverydayWifeConfig.everydayWifeMember
 import net.mamoe.mirai.contact.*
@@ -10,7 +11,7 @@ import net.mamoe.mirai.message.data.*
 
 object EverydayWife {
     suspend fun main(event: GroupMessageEvent) {
-        if (event.message.content == "每日老婆") {
+        if (everydayCommand.contains(event.message.content)) {
             val message = MessageChainBuilder()
             if (everydayWife[event.sender.id] == null || TheTime.main() >= everydayWife[event.sender.id]!!) {
                 val rank = mutableListOf<NormalMember>()

@@ -8,6 +8,7 @@ import com.purewhite.plugin.common.GroupGet.imageGroupFriend
 import com.purewhite.plugin.common.SetTime
 import com.purewhite.plugin.common.TheTime
 import com.purewhite.plugin.config.FuckMemberConfig.fuck
+import com.purewhite.plugin.config.FuckMemberConfig.memberCommand
 import com.purewhite.plugin.message.FuckMessage
 import net.mamoe.mirai.contact.AvatarSpec
 import net.mamoe.mirai.contact.getMember
@@ -19,7 +20,7 @@ import net.mamoe.mirai.message.data.content
 
 object FuckMember {
     suspend fun main(event: GroupMessageEvent) {
-        if (event.message.content == "草群友") {
+        if (memberCommand.contains(event.message.content)) {
             if (fuck[event.sender.id] == null || TheTime.main() >= fuck[event.sender.id]!!) {
                 // 获取倒霉蛋的qq号
                 var memberNumber = groupList(event).random()

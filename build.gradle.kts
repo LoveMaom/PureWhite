@@ -17,3 +17,7 @@ repositories {
 mirai {
     jvmTarget = JavaVersion.VERSION_1_8
 }
+
+dependencies {
+    implementation("org.jsoup:jsoup:1.17.2")
+}

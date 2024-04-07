@@ -3,6 +3,7 @@ package com.purewhite.plugin.translate
 import com.purewhite.plugin.common.GroupGet
 import com.purewhite.plugin.common.SetTime
 import com.purewhite.plugin.common.TheTime
+import com.purewhite.plugin.config.FuckAdminConfig.adminCommand
 import com.purewhite.plugin.config.FuckAdminConfig.adminReply
 import com.purewhite.plugin.config.FuckAdminConfig.fuckAdmin
 import com.purewhite.plugin.message.FuckMessage
@@ -22,7 +23,7 @@ import net.mamoe.mirai.message.data.content
 object FuckAdmin {
     @OptIn(DelicateCoroutinesApi::class)
     suspend fun main(event: GroupMessageEvent){
-        if (event.message.content == "草群主") {
+        if (adminCommand.contains(event.message.content)) {
             if (event.sender.permission.isOwner()) {
                 event.group.sendMessage("群主发癫想草自己是不可能的哦！")
                 return

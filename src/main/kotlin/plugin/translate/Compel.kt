@@ -4,6 +4,7 @@ import com.purewhite.plugin.common.GroupGet
 import com.purewhite.plugin.common.SetTime
 import com.purewhite.plugin.common.TheTime
 import com.purewhite.plugin.config.CompelConfig.compel
+import com.purewhite.plugin.config.CompelConfig.compelCommand
 import com.purewhite.plugin.config.CompelConfig.compelReply
 import com.purewhite.plugin.config.RecordConfig.recordSet
 import com.purewhite.plugin.message.FuckMessage
@@ -25,7 +26,14 @@ import net.mamoe.mirai.message.data.content
 object Compel {
     @OptIn(DelicateCoroutinesApi::class)
     suspend fun main(event: GroupMessageEvent) {
-        if (event.message.content.contains("强上") && event.message.any { it is At }) {
+        var doorBoolean = false
+        for (i in compelCommand.indices) {
+            if (event.message.content.contains(compelCommand[i])) {
+                doorBoolean = true
+                break
+            }
+        }
+        if (doorBoolean && event.message.any { it is At }) {
             if (compel[event.sender.id] == null || TheTime.main() >= compel[event.sender.id]!!) {
                 // 获取被强上的对象
                 val member = event.group.getMemberOrFail(GroupGet.atNum(event.message.content))
@@ -56,7 +64,7 @@ object Compel {
                                             "你扒开衣服，从${name}(${member.id})的背后冲了过去，撕开丝袜对着门路就怼了进去，直接强行活塞运动，在${name}(${member.id})痛苦嚎叫中结束了你的活塞运动",
                                             "你扑向${name}${member.id}在警察赶到前，能做的全部做了个遍，大呼：这波不亏"
                                         )
-                                        message.add(messageList.random())
+                                        message.add(At(sender) + messageList.random())
                                         GroupGet.download(event, url, event.group, message, image, "强上")
                                     } else {
                                         val messageList = mutableListOf(

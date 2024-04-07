@@ -32,6 +32,7 @@ object PureWhite : KotlinPlugin(
         EverydayWifeConfig.reload()
         CompelConfig.reload()
         RecordConfig.reload()
+        FortuneConfig.reload()
         GlobalEventChannel.subscribeAlways<GroupMessageEvent> {
             if (group.botMuteRemaining < 1) {
                 FuckMember.main(this)
@@ -41,6 +42,8 @@ object PureWhite : KotlinPlugin(
                 HelpMessage.main(this)
                 Compel.main(this)
                 GroupGet.record(this)
+                Fortune.main(this)
+                Fortune.set(this)
             }
         }
     }

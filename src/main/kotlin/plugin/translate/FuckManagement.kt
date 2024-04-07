@@ -4,6 +4,7 @@ import com.purewhite.plugin.common.GroupGet
 import com.purewhite.plugin.common.SetTime
 import com.purewhite.plugin.common.TheTime
 import com.purewhite.plugin.config.FuckManagementConfig.fuckManagement
+import com.purewhite.plugin.config.FuckManagementConfig.managementCommand
 import com.purewhite.plugin.message.FuckMessage
 import net.mamoe.mirai.contact.*
 import net.mamoe.mirai.event.events.GroupMessageEvent
@@ -13,7 +14,7 @@ import net.mamoe.mirai.message.data.content
 
 object FuckManagement {
     suspend fun main(event: GroupMessageEvent) {
-        if (event.message.content != "草管理") {
+        if (!managementCommand.contains(event.message.content)) {
             return
         }
         if (fuckManagement[event.sender.id] == null ||
