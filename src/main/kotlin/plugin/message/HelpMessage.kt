@@ -12,6 +12,7 @@ import com.purewhite.plugin.config.FuckManagementConfig.managementCD
 import com.purewhite.plugin.config.FuckManagementConfig.managementCommand
 import com.purewhite.plugin.config.FuckMemberConfig.memberCD
 import com.purewhite.plugin.config.FuckMemberConfig.memberCommand
+import com.purewhite.plugin.config.RankListConfig.rankListCommand
 import net.mamoe.mirai.contact.nameCardOrNick
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.message.data.ForwardMessage
@@ -105,6 +106,26 @@ object HelpMessage {
                         "\n获取自己生肖的运势" +
                         "\n可以也可以设置自己的生肖" +
                         "\n例子: 设置生肖 猪"
+            )
+
+            setMessage = ForwardMessage.Node(event.bot.id, TheTime.main().toInt(), event.bot.nameCardOrNick, message.build())
+            nodeList.add(setMessage)
+            message.clear()
+
+            message.append(
+                "$rankListCommand" +
+                        "\n获取当前群聊被草排行榜"
+            )
+
+            setMessage = ForwardMessage.Node(event.bot.id, TheTime.main().toInt(), event.bot.nameCardOrNick, message.build())
+            nodeList.add(setMessage)
+            message.clear()
+
+            message.append(
+                "以上所有功能都可以单独开启关闭" +
+                        "\n例子: 关闭草群友" +
+                        "\n一键关闭所有娱乐功能: 关闭娱乐功能" +
+                "\n需要你是机器人主人/管理/群主/群管理"
             )
 
             setMessage = ForwardMessage.Node(event.bot.id, TheTime.main().toInt(), event.bot.nameCardOrNick, message.build())

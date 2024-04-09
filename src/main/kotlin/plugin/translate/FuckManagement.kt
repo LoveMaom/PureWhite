@@ -5,6 +5,7 @@ import com.purewhite.plugin.common.SetTime
 import com.purewhite.plugin.common.TheTime
 import com.purewhite.plugin.config.FuckManagementConfig.fuckManagement
 import com.purewhite.plugin.config.FuckManagementConfig.managementCommand
+import com.purewhite.plugin.config.RankListConfig
 import com.purewhite.plugin.message.FuckMessage
 import net.mamoe.mirai.contact.*
 import net.mamoe.mirai.event.events.GroupMessageEvent
@@ -41,6 +42,8 @@ object FuckManagement {
             val message = MessageChainBuilder()
             val name = GroupGet.filter(user.nameCardOrNick)
 
+            if (RankListConfig.fuckRankList[event.group.id] == null) RankListConfig.fuckRankList[event.group.id] = mutableMapOf()
+
             if ((0..100).random() > 50) {
 
                 if (user.id == event.sender.id) {
@@ -55,6 +58,8 @@ object FuckManagement {
                         "${name}(${user.id})被你超了之后，撇撇嘴: 就这啊？",
                         "狂超${name}(${user.id})后，越超越得劲，最终被榨干了，你踉踉跄跄的走了"
                     )
+                    if (RankListConfig.fuckRankList[event.group.id]!![user.id] == null) RankListConfig.fuckRankList[event.group.id]!![user.id] = 0
+                    RankListConfig.fuckRankList[event.group.id]!![user.id] = RankListConfig.fuckRankList[event.group.id]!![user.id]!! + 1
                     message.add(At(event.sender) + messageList.random())
                 } else {
                     val messageList = mutableListOf(
@@ -62,9 +67,10 @@ object FuckManagement {
                         "${name}(${user.id})反手将你超了，还觉得你真润！",
                         "超${name}(${user.id})中，被反超，你被超的肛痛欲裂！"
                     )
+                    if (RankListConfig.fuckRankList[event.group.id]!![event.sender.id] == null) RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = 0
+                    RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = RankListConfig.fuckRankList[event.group.id]!![event.sender.id]!! + 1
                     message.add(At(event.sender) + messageList.random())
                 }
-
                 GroupGet.download(event, url, event.group, message, image, "草管理")
             } else {
                 val messageList = mutableListOf(
@@ -74,6 +80,8 @@ object FuckManagement {
                 )
                 SetTime.time(event, "草管理")
                 event.group.sendMessage(At(event.sender) + messageList.random())
+                if (RankListConfig.fuckRankList[event.group.id]!![event.sender.id] == null) RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = 0
+                RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = RankListConfig.fuckRankList[event.group.id]!![event.sender.id]!! + 1
             }
         } else FuckMessage.no(event,"草管理")
     }

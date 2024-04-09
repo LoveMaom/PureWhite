@@ -1,5 +1,6 @@
 package com.purewhite.plugin.translate
 
+import com.purewhite.plugin.config.FortuneConfig.fortuneCommand
 import com.purewhite.plugin.config.FortuneConfig.fortuneZodiac
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.message.data.At
@@ -11,7 +12,7 @@ import java.io.IOException
 
 object Fortune {
     suspend fun main(event: GroupMessageEvent) {
-        if (event.message.content == "今日运势") {
+        if (fortuneCommand.contains(event.message.content)) {
             try {
                 val message = MessageChainBuilder()
                 //获取网页内容
@@ -23,9 +24,7 @@ object Fortune {
                 if (fortuneZodiac[event.sender.id] != null) {
                     zodiacName = fortuneZodiac[event.sender.id]!!
                 } else {
-                    zodiacName = mutableListOf(
-                        "鼠", "龙", "马", "牛", "虎", "兔", "蛇", "羊", "猴", "鸡", "狗", "猪"
-                    ).random()
+                    zodiacName = mutableListOf("鼠", "龙", "马", "牛", "虎", "兔", "蛇", "羊", "猴", "鸡", "狗", "猪").random()
                     fortuneZodiac[event.sender.id] = zodiacName
                 }
                 val zodiacList = when (zodiacName) {
@@ -62,7 +61,6 @@ object Fortune {
                 val doc2 = Jsoup.connect("https://www.smxs.com/shengxiaoriyun/${zodiac}").get()
                 //将html内容放进集合中
                 val ysdesc = doc2.select("div[class=ysdesc]")
-                val kycl = doc2.select("div[class=kycl]")
                 val kyzhi = doc2.select("div[class=kyzhi]")
 
                 val career = mutableListOf(
@@ -76,14 +74,13 @@ object Fortune {
                 message.append("\n${zodiacList.select("li")[0].text()}")
                 message.append("\n${zodiacList.select("li")[1].text()}")
                 message.append("\n${zodiacList.select("li")[2].text()}")
+                message.append("\n幸运颜色: ${kyzhi[0].text()}")
+                message.append("\n幸运位数: ${kyzhi[1].text()}")
+                message.append("\n事业贵人: ${kyzhi[2].text()}")
+                message.append("\n开运方向: ${kyzhi[3].text()}")
                 message.append("\n${career.random()}")
-                message.append("\n${kycl[0].text()}${kyzhi[0].text()}")
-                message.append("\n${kycl[1].text()}${kyzhi[1].text()}")
-                message.append("\n${kycl[2].text()}${kyzhi[2].text()}")
-                message.append("\n${kycl[3].text()}${kyzhi[3].text()}")
 
                 event.group.sendMessage(message.build())
-
 
             } catch (_: IOException) {
             } catch (e: Exception) {

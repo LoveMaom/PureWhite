@@ -1,10 +1,14 @@
 package com.purewhite.plugin.config
 
+import com.purewhite.plugin.config.FuckMemberConfig.provideDelegate
 import net.mamoe.mirai.console.data.AutoSavePluginConfig
 import net.mamoe.mirai.console.data.ValueDescription
 import net.mamoe.mirai.console.data.value
 
 object CompelConfig: AutoSavePluginConfig("CompelConfig") {
+    @ValueDescription("被添加的群聊禁止使用该功能")
+    var enable: MutableList<Long> by value(mutableListOf())
+
     @ValueDescription("强上指令")
     var compelCommand by value(mutableListOf(
         "强上",

@@ -20,7 +20,7 @@ object GroupGet {
             recordSet[event.group.id]!!.add(event.sender.id)
         }
         if (recordSet[event.group.id]!!.size > 10) {
-            recordSet[event.group.id]!!.removeAt(10)
+            recordSet[event.group.id]!!.removeAt(0)
         }
     }
     // 获取艾特的人中的数字

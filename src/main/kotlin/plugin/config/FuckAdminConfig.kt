@@ -1,10 +1,15 @@
 package com.purewhite.plugin.config
 
+import com.purewhite.plugin.config.CompelConfig.provideDelegate
+import com.purewhite.plugin.config.FuckMemberConfig.provideDelegate
 import net.mamoe.mirai.console.data.AutoSavePluginConfig
 import net.mamoe.mirai.console.data.ValueDescription
 import net.mamoe.mirai.console.data.value
 
 object FuckAdminConfig : AutoSavePluginConfig("FuckAdminConfig") {
+    @ValueDescription("被添加的群聊禁止使用该功能")
+    var enable: MutableList<Long> by value(mutableListOf())
+
     @ValueDescription("草群主指令")
     var adminCommand by value(mutableListOf(
         "草群主",

@@ -6,16 +6,14 @@ import com.purewhite.plugin.common.TheTime
 import com.purewhite.plugin.config.CompelConfig.compel
 import com.purewhite.plugin.config.CompelConfig.compelCommand
 import com.purewhite.plugin.config.CompelConfig.compelReply
+import com.purewhite.plugin.config.RankListConfig
 import com.purewhite.plugin.config.RecordConfig.recordSet
 import com.purewhite.plugin.message.FuckMessage
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import net.mamoe.mirai.contact.AvatarSpec
-import net.mamoe.mirai.contact.NormalMember
-import net.mamoe.mirai.contact.getMemberOrFail
-import net.mamoe.mirai.contact.nameCardOrNick
+import net.mamoe.mirai.contact.*
 import net.mamoe.mirai.event.GlobalEventChannel
 import net.mamoe.mirai.event.ListeningStatus
 import net.mamoe.mirai.event.events.GroupMessageEvent
@@ -49,6 +47,7 @@ object Compel {
                                 "\n3.猎奇" +
                                 "\n4.饶他一次"
                     )
+                    if (RankListConfig.fuckRankList[event.group.id] == null) RankListConfig.fuckRankList[event.group.id] = mutableMapOf()
                     val listener = GlobalEventChannel.subscribe<GroupMessageEvent> {
                         var boolean = false
                         if (sender == oneSender) {
@@ -66,6 +65,8 @@ object Compel {
                                         )
                                         message.add(At(sender) + messageList.random())
                                         GroupGet.download(event, url, event.group, message, image, "强上")
+                                        if (RankListConfig.fuckRankList[event.group.id]!![member.id] == null) RankListConfig.fuckRankList[event.group.id]!![member.id] = 0
+                                        RankListConfig.fuckRankList[event.group.id]!![member.id] = RankListConfig.fuckRankList[event.group.id]!![member.id]!! + 1
                                     } else {
                                         val messageList = mutableListOf(
                                             "你冲上去，结果被${name}(${member.id})一巴掌打晕，把你抱起进入小巷中一顿乱超",
@@ -73,15 +74,17 @@ object Compel {
                                             "${name}${member.id}一JIO把你的牛牛踹断了"
                                         )
                                         message.add(At(sender) + messageList.random())
+                                        if (RankListConfig.fuckRankList[event.group.id]!![event.sender.id] == null) RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = 0
+                                        RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = RankListConfig.fuckRankList[event.group.id]!![event.sender.id]!! + 1
                                         GroupGet.download(event, url, event.group, message, image, "强上")
                                     }
                                     boolean = true
                                 }
 
                                 "2" -> {
-                                    val members = mutableListOf<NormalMember>()
+                                    val members = mutableListOf<Member>()
                                     val random = (0..100).random()
-                                    if (recordSet[event.group.id] == null || recordSet[event.group.id]!!.size < 5) {
+                                    if (recordSet[event.group.id] == null || recordSet[event.group.id]!!.size <= 5) {
                                         for (i in 0 until 5) {
                                             val randomMember = event.group.members.random()
                                             if (!members.contains(randomMember)) {
@@ -89,15 +92,55 @@ object Compel {
                                             }
                                         }
                                     }
-                                    if (recordSet[event.group.id]!!.size >= 5) {
-                                        for (i in 0 until 5) {
-                                            members.add(event.group.getMemberOrFail(recordSet[event.group.id]!![i]))
+                                    if (recordSet[event.group.id]!!.size > 5) {
+                                        while (true) {
+                                            val randomMember = recordSet[event.group.id]!!.random()
+                                            if (randomMember != sender.id) {
+                                                members.add(this.group.getMemberOrFail(randomMember))
+                                            }
+                                            if (members.size >= 5) break
                                         }
                                     }
-                                    if (random > 80) group.sendMessage(At(sender) + "你在想着超路人时被${members[0].nameCardOrNick}(${members[0].id})、${members[1].nameCardOrNick}(${members[1].id})和${members[2].nameCardOrNick}(${members[2].id})超了")
-                                    else if (random > 50) message.add(At(sender) + "${members[0].nameCardOrNick}(${members[0].id})、${members[1].nameCardOrNick}(${members[1].id})和${members[2].nameCardOrNick}(${members[2].id})正在路上走着撞见你正在超${member.nameCardOrNick}(${member.id})，结果被你一起超了")
-                                    else if (random > 10) message.add(At(sender) + "${members[0].nameCardOrNick}(${members[0].id})、${members[1].nameCardOrNick}(${members[1].id})、${members[2].nameCardOrNick}(${members[2].id})和${members[3].nameCardOrNick}(${members[3].id})正在路上走着撞见你正在超${member.nameCardOrNick}(${member.id})，结果被你一起超了")
-                                    else message.add(At(sender) + "${members[0].nameCardOrNick}(${members[0].id})、${members[1].nameCardOrNick}(${members[1].id})、${members[2].nameCardOrNick}(${members[2].id})、${members[3].nameCardOrNick}(${members[3].id})和${members[4].nameCardOrNick}(${members[4].id})正在路上走着撞见你正在超${member.nameCardOrNick}(${member.id})，结果被你一起超了")
+                                    if (random > 80) {
+                                        group.sendMessage(At(sender) +
+                                                "你在想着超路人时被${members[0].nameCardOrNick}(${members[0].id})、" +
+                                                "${members[1].nameCardOrNick}(${members[1].id})和${members[2].nameCardOrNick}(${members[2].id})超了")
+                                        if (RankListConfig.fuckRankList[event.group.id]!![event.sender.id] == null) RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = 0
+                                        RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = RankListConfig.fuckRankList[event.group.id]!![event.sender.id]!! + 1
+                                    }
+
+                                    else if (random > 50) {
+                                        message.add(At(sender) +
+                                                "${members[0].nameCardOrNick}(${members[0].id})、" +
+                                                "${members[1].nameCardOrNick}(${members[1].id})和" +
+                                                "${members[2].nameCardOrNick}(${members[2].id})" +
+                                                "正在路上走着撞见你正在超${member.nameCardOrNick}(${member.id})，结果被你一起超了")
+                                        if (RankListConfig.fuckRankList[event.group.id]!![member.id] == null) RankListConfig.fuckRankList[event.group.id]!![member.id] = 0
+                                        RankListConfig.fuckRankList[event.group.id]!![member.id] = RankListConfig.fuckRankList[event.group.id]!![member.id]!! + 1
+                                    }
+                                    else if (random > 10) {
+                                        message.add(
+                                            At(sender) +
+                                                    "${members[0].nameCardOrNick}(${members[0].id})、" +
+                                                    "${members[1].nameCardOrNick}(${members[1].id})、" +
+                                                    "${members[2].nameCardOrNick}(${members[2].id})和" +
+                                                    "${members[3].nameCardOrNick}(${members[3].id})正在路上走着撞见你正在超" +
+                                                    "${member.nameCardOrNick}(${member.id})，结果被你一起超了"
+                                        )
+                                        if (RankListConfig.fuckRankList[event.group.id]!![member.id] == null) RankListConfig.fuckRankList[event.group.id]!![member.id] = 0
+                                        RankListConfig.fuckRankList[event.group.id]!![member.id] = RankListConfig.fuckRankList[event.group.id]!![member.id]!! + 1
+                                    }
+                                    else {
+                                        message.add(At(sender) +
+                                                "${members[0].nameCardOrNick}(${members[0].id})、" +
+                                                "${members[1].nameCardOrNick}(${members[1].id})、" +
+                                                "${members[2].nameCardOrNick}(${members[2].id})、" +
+                                                "${members[3].nameCardOrNick}(${members[3].id})和" +
+                                                "${members[4].nameCardOrNick}(${members[4].id})" +
+                                                "正在路上走着撞见你正在超${member.nameCardOrNick}(${member.id})，结果被你一起超了")
+                                        if (RankListConfig.fuckRankList[event.group.id]!![member.id] == null) RankListConfig.fuckRankList[event.group.id]!![member.id] = 0
+                                        RankListConfig.fuckRankList[event.group.id]!![member.id] = RankListConfig.fuckRankList[event.group.id]!![member.id]!! + 1
+                                    }
 
                                     boolean = true
                                     if (random <= 80) {
@@ -114,6 +157,8 @@ object Compel {
                                     message.add(At(sender) + messageList.random())
                                     boolean = true
                                     GroupGet.download(event, url, event.group, message, image, "强上")
+                                    if (RankListConfig.fuckRankList[event.group.id]!![member.id] == null) RankListConfig.fuckRankList[event.group.id]!![member.id] = 0
+                                    RankListConfig.fuckRankList[event.group.id]!![member.id] = RankListConfig.fuckRankList[event.group.id]!![member.id]!! + 1
                                 }
 
                                 "4" -> {
@@ -145,6 +190,8 @@ object Compel {
                     )
                     event.group.sendMessage(At(event.sender) + messageList.random())
                     SetTime.time(event,"强上")
+                    if (RankListConfig.fuckRankList[event.group.id]!![event.sender.id] == null) RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = 0
+                    RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = RankListConfig.fuckRankList[event.group.id]!![event.sender.id]!! + 1
                 }
             } else FuckMessage.no(event,"强上")
         }

@@ -21,7 +21,7 @@ import javax.imageio.ImageIO
 object FuckMessage {
     suspend fun no(event: GroupMessageEvent,type: String) {
         // 获取操人时间未到图片
-        val file = File("data/com.purewhite.entertainment/FuckNo").listFiles()!!.random()
+        val file = File("data/com.purewhite.entertainment/No").listFiles()!!.random()
         if (!file.isFile) {
             event.group.sendMessage(MessageConfig.fuck.random())
             return

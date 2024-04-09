@@ -5,6 +5,7 @@ import com.purewhite.plugin.common.TheTime
 import com.purewhite.plugin.config.EverydayWifeConfig.everydayCommand
 import com.purewhite.plugin.config.EverydayWifeConfig.everydayWife
 import com.purewhite.plugin.config.EverydayWifeConfig.everydayWifeMember
+import com.purewhite.plugin.config.RecordConfig.recordSet
 import net.mamoe.mirai.contact.*
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.message.data.*
@@ -14,8 +15,15 @@ object EverydayWife {
         if (everydayCommand.contains(event.message.content)) {
             val message = MessageChainBuilder()
             if (everydayWife[event.sender.id] == null || TheTime.main() >= everydayWife[event.sender.id]!!) {
-                val rank = mutableListOf<NormalMember>()
-                val members = event.group.members
+                val rank = mutableListOf<Member>()
+                var members = mutableListOf<Member>()
+                if (recordSet.isNotEmpty()) {
+                    for (i in 0 until recordSet.size) {
+                        members.add(event.group.getMemberOrFail(recordSet[event.group.id]!![i]))
+                    }
+                } else {
+                    members = event.group.members.toMutableList()
+                }
                 for (i in members.indices) {
                     val randomMember = members.random()
                     if (members.size > 30) {

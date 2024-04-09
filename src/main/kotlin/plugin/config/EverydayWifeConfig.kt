@@ -1,10 +1,15 @@
 package com.purewhite.plugin.config
 
+import com.purewhite.plugin.config.CompelConfig.provideDelegate
+import com.purewhite.plugin.config.FuckMemberConfig.provideDelegate
 import net.mamoe.mirai.console.data.AutoSavePluginConfig
 import net.mamoe.mirai.console.data.ValueDescription
 import net.mamoe.mirai.console.data.value
 
 object EverydayWifeConfig: AutoSavePluginConfig("EverydayWifeConfig") {
+    @ValueDescription("被添加的群聊禁止使用该功能")
+    var enable: MutableList<Long> by value(mutableListOf())
+
     @ValueDescription("每日老婆指令")
     var everydayCommand by value(mutableListOf(
         "每日老婆",

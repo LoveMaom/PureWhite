@@ -6,6 +6,7 @@ import com.purewhite.plugin.common.TheTime
 import com.purewhite.plugin.config.FuckAdminConfig.adminCommand
 import com.purewhite.plugin.config.FuckAdminConfig.adminReply
 import com.purewhite.plugin.config.FuckAdminConfig.fuckAdmin
+import com.purewhite.plugin.config.RankListConfig
 import com.purewhite.plugin.message.FuckMessage
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -86,6 +87,8 @@ object FuckAdmin {
                         "\n4.${kill.random()}" +
                         "\n5.饶他一次")
 
+                if (RankListConfig.fuckRankList[event.group.id] == null) RankListConfig.fuckRankList[event.group.id] = mutableMapOf()
+
                 // 创建监听
                 val adminListener = GlobalEventChannel.subscribe<GroupMessageEvent> {
                     // 最终判断开关监听
@@ -115,6 +118,8 @@ object FuckAdmin {
                                             "\n${members[2]!!.nameCardOrNick}(${members[2]!!.id})" +
                                             "\n${messageList.random()}")
                                     GroupGet.download(event, url, event.group, message, image, "草群主")
+                                    if (RankListConfig.fuckRankList[event.group.id]!![admin.id] == null) RankListConfig.fuckRankList[event.group.id]!![admin.id] = 0
+                                    RankListConfig.fuckRankList[event.group.id]!![admin.id] = RankListConfig.fuckRankList[event.group.id]!![admin.id]!! + 1
                                 } else {
                                     end = true
                                     val messageList = mutableListOf(
@@ -124,6 +129,8 @@ object FuckAdmin {
                                     )
                                     SetTime.time(event,"草群主")
                                     event.group.sendMessage(At(sender) + messageList.random())
+                                    if (RankListConfig.fuckRankList[event.group.id]!![event.sender.id] == null) RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = 0
+                                    RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = RankListConfig.fuckRankList[event.group.id]!![event.sender.id]!! + 1
                                 }
                             }
                             if (fuck.contains(it.message.content) || "2" == it.message.content) {
@@ -136,6 +143,8 @@ object FuckAdmin {
                                     )
                                     message.add(At(sender) + messageList.random())
                                     GroupGet.download(event, url, event.group, message, image, "草群主")
+                                    if (RankListConfig.fuckRankList[event.group.id]!![admin.id] == null) RankListConfig.fuckRankList[event.group.id]!![admin.id] = 0
+                                    RankListConfig.fuckRankList[event.group.id]!![admin.id] = RankListConfig.fuckRankList[event.group.id]!![admin.id]!! + 1
                                 } else {
                                     end = true
                                     val messageList = mutableListOf(
@@ -145,6 +154,8 @@ object FuckAdmin {
                                     )
                                     SetTime.time(event,"草群主")
                                     event.group.sendMessage(At(sender) + messageList.random())
+                                    if (RankListConfig.fuckRankList[event.group.id]!![event.sender.id] == null) RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = 0
+                                    RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = RankListConfig.fuckRankList[event.group.id]!![event.sender.id]!! + 1
                                 }
                             }
                             if (rogue.contains(it.message.content)  || "3" == it.message.content) {
@@ -157,6 +168,8 @@ object FuckAdmin {
                                     )
                                     message.add(At(sender) + messageList.random())
                                     GroupGet.download(event, url, event.group, message, image, "草群主")
+                                    if (RankListConfig.fuckRankList[event.group.id]!![admin.id] == null) RankListConfig.fuckRankList[event.group.id]!![admin.id] = 0
+                                    RankListConfig.fuckRankList[event.group.id]!![admin.id] = RankListConfig.fuckRankList[event.group.id]!![admin.id]!! + 1
                                 } else {
                                     end = true
                                     val messageList = mutableListOf(
@@ -166,6 +179,8 @@ object FuckAdmin {
                                     )
                                     SetTime.time(event,"草群主")
                                     event.group.sendMessage(At(sender) + messageList.random())
+                                    if (RankListConfig.fuckRankList[event.group.id]!![event.sender.id] == null) RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = 0
+                                    RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = RankListConfig.fuckRankList[event.group.id]!![event.sender.id]!! + 1
                                 }
                             }
                             if (kill.contains(it.message.content)  || "4" == it.message.content) {
@@ -178,6 +193,8 @@ object FuckAdmin {
                                     )
                                     message.add(At(sender) + messageList.random())
                                     GroupGet.download(event, url, event.group, message, image, "草群主")
+                                    if (RankListConfig.fuckRankList[event.group.id]!![admin.id] == null) RankListConfig.fuckRankList[event.group.id]!![admin.id] = 0
+                                    RankListConfig.fuckRankList[event.group.id]!![admin.id] = RankListConfig.fuckRankList[event.group.id]!![admin.id]!! + 1
                                 } else {
                                     end = true
                                     val messageList = mutableListOf(
@@ -187,11 +204,15 @@ object FuckAdmin {
                                     )
                                     SetTime.time(event,"草群主")
                                     event.group.sendMessage(At(sender) + messageList.random())
+                                    if (RankListConfig.fuckRankList[event.group.id]!![event.sender.id] == null) RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = 0
+                                    RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = RankListConfig.fuckRankList[event.group.id]!![event.sender.id]!! + 1
                                 }
                             }
                         } else {
                             end = true
                             messageEnd(sender,event)
+                            if (RankListConfig.fuckRankList[event.group.id]!![event.sender.id] == null) RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = 0
+                            RankListConfig.fuckRankList[event.group.id]!![event.sender.id] = RankListConfig.fuckRankList[event.group.id]!![event.sender.id]!! + 1
                         }
                         if (member == sender && "饶他一次" == it.message.content ||  "5" == it.message.content) {
                             end = true
