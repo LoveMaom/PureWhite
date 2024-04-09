@@ -1,6 +1,5 @@
 package com.purewhite.plugin.config
 
-import com.purewhite.plugin.config.CompelConfig.provideDelegate
 import net.mamoe.mirai.console.data.AutoSavePluginConfig
 import net.mamoe.mirai.console.data.ValueDescription
 import net.mamoe.mirai.console.data.value

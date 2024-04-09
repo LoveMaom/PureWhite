@@ -16,7 +16,6 @@ import com.purewhite.plugin.config.FuckMemberConfig.memberCommand
 import com.purewhite.plugin.config.FuckMemberConfig.successFuckMe
 import com.purewhite.plugin.config.FuckMemberConfig.successFuckMember
 import com.purewhite.plugin.config.FuckMemberConfig.successFuckMember2
-import com.purewhite.plugin.config.RankListConfig
 import com.purewhite.plugin.config.RankListConfig.fuckRankList
 import com.purewhite.plugin.config.RecordConfig.recordSet
 import com.purewhite.plugin.message.FuckMessage
