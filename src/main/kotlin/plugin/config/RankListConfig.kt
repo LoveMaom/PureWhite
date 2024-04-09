@@ -13,6 +13,11 @@ object RankListConfig : AutoSavePluginConfig("RankListConfig") {
         "被草排行榜",
         "被撅排行榜"
     ))
+    @ValueDescription("全群被草排行榜指令")
+    var totalRankListCommand: MutableList<String> by value(mutableListOf(
+        "被草总榜",
+        "全群被草排行榜"
+    ))
     @ValueDescription("本群被草排行榜")
     var fuckRankList: MutableMap<Long, MutableMap<Long ,Long>> by value(mutableMapOf())
 }

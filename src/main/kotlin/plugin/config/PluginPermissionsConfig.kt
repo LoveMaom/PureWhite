@@ -15,4 +15,6 @@ object PluginPermissionsConfig : AutoSavePluginConfig("PluginPermissionsConfig")
     var admin: MutableList<Long> by value(mutableListOf(
         2378085579
     ))
+    @ValueDescription("机器人QQ")
+    var bot by value(3602124433)
 }

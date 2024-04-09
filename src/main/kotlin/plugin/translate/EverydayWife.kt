@@ -17,8 +17,9 @@ object EverydayWife {
             if (everydayWife[event.sender.id] == null || TheTime.main() >= everydayWife[event.sender.id]!!) {
                 val rank = mutableListOf<Member>()
                 var members = mutableListOf<Member>()
-                if (recordSet.isNotEmpty()) {
-                    for (i in 0 until recordSet.size) {
+                if (recordSet[event.group.id]!!.size >= 2) {
+                    for (i in recordSet[event.group.id]!!.indices) {
+                        if (recordSet[event.group.id]!![i] == event.sender.id) continue
                         members.add(event.group.getMemberOrFail(recordSet[event.group.id]!![i]))
                     }
                 } else {
@@ -48,23 +49,19 @@ object EverydayWife {
                 message.add(
                     At(event.sender)
                             +"\n恭喜你，你今日的老婆是: \n${wife.nameCardOrNick}(${wife.id})"
-                            +"\n————————"
+                            +"\n—————————"
                 )
                 val image = GroupGet.imageGroupFriend(wife.avatarUrl(AvatarSpec.LARGE))
                 everydayWifeMember[event.sender.id] = wife.id
                 GroupGet.download(event,wife.avatarUrl,event.group,message,image,"每日老婆")
             } else {
                 val groupNum = GroupGet.checkGroup(event, everydayWifeMember[event.sender.id]!!)
-                if (groupNum == 0L) {
-                    event.group.sendMessage("无法获取你今天的老婆，原因：你的老婆已经退出你老婆原本所在的群聊")
-                    return
-                }
                 val member = event.bot.getGroupOrFail(groupNum).getMemberOrFail(everydayWifeMember[event.sender.id]!!)
                 message.add(
                     At(event.sender) +
                             "\n你已经有老婆了" +
                             "\n今日的老婆是: \n${member.nameCardOrNick}(${member.id})" +
-                            "\n————————"
+                            "\n—————————"
                 )
                 val image = GroupGet.imageGroupFriend(member.avatarUrl(AvatarSpec.LARGE))
                 GroupGet.download(event, member.avatarUrl, event.group, message, image, "每日老婆")

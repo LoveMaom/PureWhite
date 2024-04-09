@@ -63,6 +63,7 @@ object FuckMember {
                         message.add(At(event.sender) + successFuckMe.random())
                     }
                     if (fuckRankList[event.group.id]!![memberInfo.id] == null) fuckRankList[event.group.id]!![memberInfo.id] = 0
+                    if (fuckRankList[checkGroup(event, memberNumber)]!![memberInfo.id] == null) fuckRankList[checkGroup(event, memberNumber)]!![memberInfo.id] = 0
 
                     // 判断是否是本群人
                     if (checkGroup(event, memberNumber) != event.group.id)

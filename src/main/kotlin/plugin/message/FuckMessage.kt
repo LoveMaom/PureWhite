@@ -21,11 +21,7 @@ import javax.imageio.ImageIO
 object FuckMessage {
     suspend fun no(event: GroupMessageEvent,type: String) {
         // 获取操人时间未到图片
-        val file = File("data/com.purewhite.entertainment/No").listFiles()!!.random()
-        if (!file.isFile) {
-            event.group.sendMessage(MessageConfig.fuck.random())
-            return
-        }
+        val list = File("data/com.purewhite.entertainment/No").listFiles()
         var time = 0L
         when (type){
             "强上" -> time = compel[event.sender.id]!! - TheTime.main()
@@ -33,6 +29,12 @@ object FuckMessage {
             "草管理" -> time = fuckManagement[event.sender.id]!! - TheTime.main()
             "草群主" -> time = fuckAdmin[event.sender.id]!! - TheTime.main()
         }
+        if (list!!.isEmpty()) {
+            event.group.sendMessage(MessageConfig.fuck.random().replace("%time",(time / 60).toString()))
+            return
+        }
+        val file = File("data/com.purewhite.entertainment/No").listFiles()!!.random()
+
         if (file.name.contains(".gif")) {
             // 发出图片
             event.group.sendMessage(buildMessageChain {

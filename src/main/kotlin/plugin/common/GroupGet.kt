@@ -1,10 +1,13 @@
 package com.purewhite.plugin.common
 
+import com.purewhite.plugin.config.RankListConfig.fuckRankList
 import com.purewhite.plugin.config.RecordConfig.recordSet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.mamoe.mirai.contact.Contact
+import net.mamoe.mirai.event.events.BotLeaveEvent
 import net.mamoe.mirai.event.events.GroupMessageEvent
+import net.mamoe.mirai.event.events.MemberLeaveEvent
 import net.mamoe.mirai.message.data.MessageChainBuilder
 import net.mamoe.mirai.utils.ExternalResource.Companion.uploadAsImage
 import java.io.File
@@ -21,6 +24,21 @@ object GroupGet {
         }
         if (recordSet[event.group.id]!!.size > 10) {
             recordSet[event.group.id]!!.removeAt(0)
+        }
+    }
+    // 检测退出的成员 并删除对应配置文件
+    fun quit(event: MemberLeaveEvent){
+        if (recordSet[event.group.id]!!.contains(event.member.id)) {
+            recordSet[event.group.id]!!.remove(event.member.id)
+        }
+        if (fuckRankList[event.group.id]!!.contains(event.member.id)) {
+            fuckRankList[event.group.id]!!.remove(event.member.id)
+        }
+    }
+    // 检测被踢出的群聊
+    fun botQuit(event: BotLeaveEvent){
+        if (fuckRankList.contains(event.groupId)) {
+            fuckRankList.remove(event.groupId)
         }
     }
     // 获取艾特的人中的数字

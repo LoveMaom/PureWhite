@@ -3,12 +3,15 @@ package com.purewhite
 import com.purewhite.plugin.common.Create
 import com.purewhite.plugin.common.GroupGet
 import com.purewhite.plugin.config.*
+import com.purewhite.plugin.config.EntertainmentConfig.newsEnable
 import com.purewhite.plugin.message.HelpMessage
 import com.purewhite.plugin.translate.*
 import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescription
 import net.mamoe.mirai.console.plugin.jvm.KotlinPlugin
 import net.mamoe.mirai.event.GlobalEventChannel
+import net.mamoe.mirai.event.events.BotLeaveEvent
 import net.mamoe.mirai.event.events.GroupMessageEvent
+import net.mamoe.mirai.event.events.MemberLeaveEvent
 import net.mamoe.mirai.utils.info
 
 object PureWhite : KotlinPlugin(
@@ -36,6 +39,7 @@ object PureWhite : KotlinPlugin(
         FortuneConfig.reload()
         RankListConfig.reload()
         PluginPermissionsConfig.reload()
+        EntertainmentConfig.reload()
         GlobalEventChannel.subscribeAlways<GroupMessageEvent> {
             if (group.botMuteRemaining < 1) {
                 if (!PluginPermissionsConfig.enable.contains(this.group.id)) {
@@ -47,11 +51,20 @@ object PureWhite : KotlinPlugin(
                     if (!FortuneConfig.enable.contains(this.group.id)) Fortune.main(this)
                     if (!FortuneConfig.enable.contains(this.group.id)) Fortune.set(this)
                     if (!RankListConfig.enable.contains(this.group.id)) RankList.main(this)
+                    if (!RankListConfig.enable.contains(this.group.id)) RankList.total(this)
+                    if (!EntertainmentConfig.enable.contains(this.group.id)) GetApi.main(this)
                     HelpMessage.main(this)
                     GroupGet.record(this)
                 }
                 Switch.main(this)
             }
         }
+        GlobalEventChannel.subscribeAlways<MemberLeaveEvent> {
+            GroupGet.quit(this)
+        }
+        GlobalEventChannel.subscribeAlways<BotLeaveEvent> {
+            GroupGet.botQuit(this)
+        }
+        if (newsEnable) GetApi.time()
     }
 }

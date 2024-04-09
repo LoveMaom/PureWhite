@@ -11,11 +11,10 @@ import java.io.File
 
 object SwitchMessage {
     suspend fun main (event: GroupMessageEvent,type: String,enable: String){
-        var file : File
         if (enable == "开启") {
             // 获取成功图片
-            file = File("data/com.purewhite.entertainment/Yes").listFiles()!!.random()
-            if (!file.isFile) {
+            val file = File("data/com.purewhite.entertainment/Yes").listFiles()
+            if (file!!.isEmpty()) {
                 event.group.sendMessage(functionYes.random().replace("%type%",type))
                 return
             }
@@ -23,14 +22,14 @@ object SwitchMessage {
                 buildMessageChain {
                     +At(event.sender)
                     +PlainText(functionYes.random().replace("%type%",type))
-                    +file.uploadAsImage(event.group)
+                    +file.random().uploadAsImage(event.group)
                 }
             )
         }
         if (enable == "关闭") {
             // 获取失败图片
-            file = File("data/com.purewhite.entertainment/No").listFiles()!!.random()
-            if (!file.isFile) {
+            val file = File("data/com.purewhite.entertainment/No").listFiles()
+            if (file!!.isEmpty()) {
                 event.group.sendMessage(functionNo.random().replace("%type%",type))
                 return
             }
@@ -38,7 +37,7 @@ object SwitchMessage {
                 buildMessageChain {
                     +At(event.sender)
                     +PlainText(functionNo.random().replace("%type%",type))
-                    +file.uploadAsImage(event.group)
+                    +file.random().uploadAsImage(event.group)
                 }
             )
         }

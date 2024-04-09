@@ -29,6 +29,14 @@ object Switch {
                     } else event.group.sendMessage("${open}功能，已经是开启状态了")
                     return
                 }
+                // 小功能
+                if (open == "小功能") {
+                    if (PluginPermissionsConfig.enable.contains(event.group.id)) {
+                        SwitchMessage.main(event,open,"开启")
+                        EntertainmentConfig.enable.remove(event.group.id)
+                    } else event.group.sendMessage("${open}功能，已经是开启状态了")
+                    return
+                }
                 // 被草排行榜
                 if (rankListCommand.contains(open)) {
                     if (RankListConfig.enable.contains(event.group.id)) {
@@ -93,6 +101,14 @@ object Switch {
                     if (!PluginPermissionsConfig.enable.contains(event.group.id)) {
                         SwitchMessage.main(event,open,"关闭")
                         PluginPermissionsConfig.enable.add(event.group.id)
+                    } else event.group.sendMessage("${open}功能，已经是关闭状态了")
+                    return
+                }
+                // 小功能
+                if (open == "小功能") {
+                    if (!PluginPermissionsConfig.enable.contains(event.group.id)) {
+                        SwitchMessage.main(event,open,"关闭")
+                        EntertainmentConfig.enable.add(event.group.id)
                     } else event.group.sendMessage("${open}功能，已经是关闭状态了")
                     return
                 }

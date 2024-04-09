@@ -4,6 +4,9 @@ import com.purewhite.plugin.common.TheTime
 import com.purewhite.plugin.config.CommandConfig.help
 import com.purewhite.plugin.config.CompelConfig.compelCD
 import com.purewhite.plugin.config.CompelConfig.compelCommand
+import com.purewhite.plugin.config.EntertainmentConfig.KFCCommand
+import com.purewhite.plugin.config.EntertainmentConfig.nameCommand
+import com.purewhite.plugin.config.EntertainmentConfig.newsCommand
 import com.purewhite.plugin.config.EverydayWifeConfig.everydayCommand
 import com.purewhite.plugin.config.FortuneConfig.fortuneCommand
 import com.purewhite.plugin.config.FuckAdminConfig.adminCD
@@ -13,6 +16,7 @@ import com.purewhite.plugin.config.FuckManagementConfig.managementCommand
 import com.purewhite.plugin.config.FuckMemberConfig.memberCD
 import com.purewhite.plugin.config.FuckMemberConfig.memberCommand
 import com.purewhite.plugin.config.RankListConfig.rankListCommand
+import com.purewhite.plugin.config.RankListConfig.totalRankListCommand
 import net.mamoe.mirai.contact.nameCardOrNick
 import net.mamoe.mirai.event.events.GroupMessageEvent
 import net.mamoe.mirai.message.data.ForwardMessage
@@ -114,7 +118,8 @@ object HelpMessage {
 
             message.append(
                 "$rankListCommand" +
-                        "\n获取当前群聊被草排行榜"
+                "$totalRankListCommand" +
+                        "\n获取当前群聊/每个群被草第一排行榜"
             )
 
             setMessage = ForwardMessage.Node(event.bot.id, TheTime.main().toInt(), event.bot.nameCardOrNick, message.build())
@@ -122,10 +127,22 @@ object HelpMessage {
             message.clear()
 
             message.append(
-                "以上所有功能都可以单独开启关闭" +
+                "$KFCCommand" +
+                        "\n$nameCommand" +
+                "\n$newsCommand" +
+                "这里的功能统一用关闭小功能来关闭"
+            )
+
+            setMessage = ForwardMessage.Node(event.bot.id, TheTime.main().toInt(), event.bot.nameCardOrNick, message.build())
+            nodeList.add(setMessage)
+            message.clear()
+
+
+            message.append(
+                "以上所有功能可以开启关闭" +
                         "\n例子: 关闭草群友" +
                         "\n一键关闭所有娱乐功能: 关闭娱乐功能" +
-                "\n需要你是机器人主人/管理/群主/群管理"
+                        "\n需要权限:机器人主人/管理/群主/群管理"
             )
 
             setMessage = ForwardMessage.Node(event.bot.id, TheTime.main().toInt(), event.bot.nameCardOrNick, message.build())
